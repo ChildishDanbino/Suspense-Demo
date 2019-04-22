@@ -5,14 +5,6 @@ import '../App.scss';
 
 import LoginButton from '../components/LoginButton'
 
-interface IProps {
-    theme: { [key: string]: string }
-    userSessionId: string
-    setSignUp: () => void
-    setReset: () => void
-    loginUser: (state: IState) => void
-}
-
 interface IState {
     email: string
     password: string
@@ -23,12 +15,12 @@ interface IState {
     }
 }
 
-export class LoginForm extends React.PureComponent<IProps, IState> {
-    static defaultProps: Partial<IProps> = {
+export class LoginForm extends React.PureComponent<any, IState> {
+    static defaultProps: Partial<any> = {
         theme: {},
     };
 
-    constructor(props: IProps) {
+    constructor(props: any) {
         super(props);
         this.state = {
             email: '',

@@ -5,17 +5,6 @@ import React from 'react'
 // @ts-ignore
 import LoginButton from '../components/LoginButton'
 
-
-interface IProps {
-  dataTagSection?: string
-  theme: { [key: string]: string }
-  setLogin: () => void
-  registerUser: (state: IState) => void
-  resetErrors: () => void
-  serverErrors?: { [key: string]: string }
-  userSessionId: string
-}
-
 interface IState {
   firstName: string
   lastName: string
@@ -32,10 +21,10 @@ interface IState {
   }
 }
 
-export class SignUpForm extends React.PureComponent<IProps, IState> {
+export class SignUpForm extends React.PureComponent<any, IState> {
 
-  constructor(props: IProps) {
-    super(props)
+  constructor(props: any) {
+    super(props);
     this.state = {
       email: '',
       errors: {},
@@ -199,7 +188,7 @@ export class SignUpForm extends React.PureComponent<IProps, IState> {
               <div className="Error">{errors.passwordConfirmation}</div>}
             </div>
 
-           {/* <LoginButton buttonText="Sign Up"/>*/}
+            <LoginButton buttonText="Sign Up"/>
 
             <div className='BottomWrapper'>
               <div className="StaySignedIn">

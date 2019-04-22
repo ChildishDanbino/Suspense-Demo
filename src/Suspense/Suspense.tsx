@@ -2,9 +2,17 @@ import React, { Component, lazy, Suspense } from 'react'
 import Spinner from '../components/Spinner'
 
 
-const LoginForm =lazy(() => import('../../src/forms/LoginForm'));
+const LoginForm = lazy(() => import('../../src/forms/LoginForm'));
 const SignUpForm = lazy(() => import('../../src/forms/SignUpForm'));
-const ResetPasswordForm =lazy(() => import('../../src/forms/ResetPasswordForm'));
+//const ResetPasswordForm = lazy(() => import('../../src/forms/ResetPasswordForm'));
+
+const ResetPasswordForm = lazy(() => {
+    return Promise.all([
+        import('../../src/forms/ResetPasswordForm'),
+        new Promise(resolve => setTimeout(resolve, 10000))
+    ])
+        .then(([moduleExports]) => moduleExports);
+});
 
 interface IState {
     FormComponent: any
@@ -33,11 +41,23 @@ class SuspenseApp extends Component<any, IState> {
     };
 
     render() {
-        const {FormComponent} = this.state;
+        const { FormComponent } = this.state;
 
         return (
-            <Suspense fallback={<Spinner />}>
-                <FormComponent
+            <Suspense fallback={<Spinner/>}>
+                <LoginForm
+                    {...this.props}
+                    setLogin={this.setLogin}
+                    setReset={this.setReset}
+                    setSignUp={this.setSignUp}
+                />
+                <SignUpForm
+                    {...this.props}
+                    setLogin={this.setLogin}
+                    setReset={this.setReset}
+                    setSignUp={this.setSignUp}
+                />
+                <ResetPasswordForm
                     {...this.props}
                     setLogin={this.setLogin}
                     setReset={this.setReset}

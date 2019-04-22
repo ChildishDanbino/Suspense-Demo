@@ -5,11 +5,6 @@ import React from 'react'
 // @ts-ignore
 import LoginButton from '../components/LoginButton'
 
-interface IProps {
-  setLogin: () => void
-  showResetSent: (resetEmailSent: boolean) => {}
-}
-
 interface IState {
   email: string
   errors: {
@@ -17,8 +12,8 @@ interface IState {
   }
 }
 
-export class ResetPasswordForm extends React.PureComponent<IProps, IState> {
-  constructor(props: IProps) {
+export class ResetPasswordForm extends React.PureComponent<any, IState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       email: '',
