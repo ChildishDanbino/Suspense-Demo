@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, lazy} from 'react'
 
 // @ts-ignore
 import confirm from '../src/forms/ConfirmPasswordForm'
@@ -51,16 +51,15 @@ class App extends Component<any, IState> {
     this.setState({ activeForm: 'reset' })
   };
 
-  getComponent = async () => {
+  getComponent = () => {
     const { activeForm } = this.state;
-    // Lazy Load Component Module
-    const module = await formConfig[activeForm];
+    const module = formConfig[activeForm];
     this.setState({ FormComponent: module })
+    //setTimeout(() => this.setState({ FormComponent: module }), 5000)
   };
 
   render() {
     const {FormComponent} = this.state;
-    console.log(FormComponent);
 
     return FormComponent ? (
       // @ts-ignore
