@@ -2,14 +2,31 @@ import React, { Component, lazy, Suspense } from 'react'
 import Spinner from '../components/Spinner'
 
 
-const LoginForm = lazy(() => import('../../src/forms/LoginForm'));
-const SignUpForm = lazy(() => import('../../src/forms/SignUpForm'));
-//const ResetPasswordForm = lazy(() => import('../../src/forms/ResetPasswordForm'));
+// const LoginForm = lazy(() => import('../../src/forms/LoginForm'));
+// const SignUpForm = lazy(() => import('../../src/forms/SignUpForm'));
+// const ResetPasswordForm = lazy(() => import('../../src/forms/ResetPasswordForm'));
+
+const LoginForm = lazy(() => {
+    return Promise.all([
+        import('../../src/forms/LoginForm'),
+        new Promise(resolve => setTimeout(resolve, 5000))
+    ])
+        .then(([moduleExports]) => moduleExports);
+});
+
+
+const SignUpForm = lazy(() => {
+    return Promise.all([
+        import('../../src/forms/SignUpForm'),
+        new Promise(resolve => setTimeout(resolve, 5000))
+    ])
+        .then(([moduleExports]) => moduleExports);
+});
 
 const ResetPasswordForm = lazy(() => {
     return Promise.all([
         import('../../src/forms/ResetPasswordForm'),
-        new Promise(resolve => setTimeout(resolve, 10000))
+        new Promise(resolve => setTimeout(resolve, 5000))
     ])
         .then(([moduleExports]) => moduleExports);
 });
@@ -45,19 +62,7 @@ class SuspenseApp extends Component<any, IState> {
 
         return (
             <Suspense fallback={<Spinner/>}>
-                <LoginForm
-                    {...this.props}
-                    setLogin={this.setLogin}
-                    setReset={this.setReset}
-                    setSignUp={this.setSignUp}
-                />
-                <SignUpForm
-                    {...this.props}
-                    setLogin={this.setLogin}
-                    setReset={this.setReset}
-                    setSignUp={this.setSignUp}
-                />
-                <ResetPasswordForm
+                <FormComponent
                     {...this.props}
                     setLogin={this.setLogin}
                     setReset={this.setReset}

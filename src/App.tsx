@@ -1,19 +1,29 @@
 import React, { Component } from 'react'
 
 // @ts-ignore
-import { formConfig } from '../src/formConfig';
+import confirm from '../src/forms/ConfirmPasswordForm'
+import login from '../src/forms/LoginForm'
+import reset from '../src/forms/ResetPasswordForm'
+import signUp from '../src/forms/SignUpForm'
 
 interface IState {
-  FormComponent: JSX.Element | null
+  FormComponent: React.ReactNode | null
   activeForm: string
 }
+
+const formConfig: any = {
+  confirm,
+  login,
+  reset,
+  signUp,
+};
 
 class App extends Component<any, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
       FormComponent: null,
-      activeForm: props.resetToken ? 'confirm' : 'login'
+      activeForm: 'login'
     }
   }
 
@@ -45,11 +55,12 @@ class App extends Component<any, IState> {
     const { activeForm } = this.state;
     // Lazy Load Component Module
     const module = await formConfig[activeForm];
-    this.setState({ FormComponent: module.default })
+    this.setState({ FormComponent: module })
   };
 
   render() {
     const {FormComponent} = this.state;
+    console.log(FormComponent);
 
     return FormComponent ? (
       // @ts-ignore
